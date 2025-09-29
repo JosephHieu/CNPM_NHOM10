@@ -31,6 +31,12 @@
     </properties>
     <dependencies>
 
+        <!-- Eureka Client -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+        </dependency>
+
         <!--    API Gateway dependency    -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
