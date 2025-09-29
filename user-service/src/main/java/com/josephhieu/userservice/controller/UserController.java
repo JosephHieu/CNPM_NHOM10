@@ -1,6 +1,7 @@
 package com.josephhieu.userservice.controller;
 
 
+import com.josephhieu.userservice.dto.UserDto;
 import com.josephhieu.userservice.model.User;
 import com.josephhieu.userservice.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -15,18 +16,32 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping
-    public List<User> getUsers() {
-        return userService.getAllUsers();
+    @GetMapping("/{id}")
+    public UserDto getUserById(@PathVariable Long id) {
+
+        User user = userService.findById(id);
+
+        return new UserDto(user.getId(), user.getName(), user.getEmail(),
+                user.getAddress(), user.getPhone());
     }
 
-    @GetMapping("/{id}")
-    public User getUserById(@PathVariable Long id) {
-        return userService.getUserById(id);
+    @GetMapping
+    public List<UserDto> getUsers() {
+        return userService.getAllUsers()
+                .stream()
+                .map(user -> new UserDto(
+                        user.getId(),
+                        user.getName(),
+                        user.getEmail(),
+                        user.getAddress(),
+                        user.getPhone()
+                ))
+                .toList();
     }
 
     @PostMapping
     public User createUser(@RequestBody User user) {
+
         return userService.createUser(user);
     }
 
